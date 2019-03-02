@@ -929,3 +929,62 @@ it('should avoid very dangerous food if at full health', done => {
 
 	testHelper.sendMoveRequest(url, requestBody, responseHandler);
 });
+
+it('should cut off a snake when it can easily kill the enemy', done => {
+  const requestBody = requestBodyBuilder.getEmptyRequestBody(8, 8);
+
+  requestBodyBuilder.addYou(requestBody, [
+    {'x': 1, 'y': 2},
+    {'x': 1, 'y': 3},
+    {'x': 1, 'y': 4},
+    {'x': 1, 'y': 5}
+  ]);
+  requestBodyBuilder.addSnake(requestBody, [
+    {'x': 0, 'y': 4},
+    {'x': 0, 'y': 5},
+    {'x': 0, 'y': 6},
+    {'x': 1, 'y': 6},
+    {'x': 2, 'y': 6},
+    {'x': 3, 'y': 6},
+  ]);
+  requestBodyBuilder.printBoard(requestBody);
+
+  const responseHandler = (err, res) => {
+		testHelper.checkForGoodResponse(err, res);
+		expect(res.body).to.have.property('move').with.equal('left');
+		done();
+	};
+
+	testHelper.sendMoveRequest(url, requestBody, responseHandler);
+});
+
+it.only('should not kill itself assuming that the enemy will kill it', done => {
+  const requestBody = requestBodyBuilder.getEmptyRequestBody(5, 5);
+
+  requestBodyBuilder.addYou(requestBody, [
+    {'x': 0, 'y': 2},
+    {'x': 0, 'y': 1},
+    {'x': 0, 'y': 0},
+    {'x': 1, 'y': 0},
+    {'x': 2, 'y': 0},
+    {'x': 3, 'y': 0}
+  ]);
+  requestBodyBuilder.addSnake(requestBody, [
+    {'x': 1, 'y': 3},
+    {'x': 0, 'y': 3},
+    {'x': 0, 'y': 4},
+    {'x': 1, 'y': 4},
+    {'x': 2, 'y': 4},
+    {'x': 3, 'y': 4},
+    {'x': 4, 'y': 4}
+  ]);
+  requestBodyBuilder.printBoard(requestBody);
+
+  const responseHandler = (err, res) => {
+		testHelper.checkForGoodResponse(err, res);
+		expect(res.body).to.have.property('move').with.equal('right');
+		done();
+	};
+
+	testHelper.sendMoveRequest(url, requestBody, responseHandler);
+});
