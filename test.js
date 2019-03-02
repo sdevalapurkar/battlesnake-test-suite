@@ -32,7 +32,7 @@ it('should return a move to the server', done => {
     {'x': 11, 'y': 12},
     {'x': 11, 'y': 13}
   ]);
-	requestBodyBuilder.printBoard(requestBody);
+  requestBodyBuilder.printBoard(requestBody);
 
 	const responseHandler = (err, res) => {
 		testHelper.checkForGoodResponse(err, res);
@@ -302,7 +302,7 @@ it('should not move into a space behind a tail that is about to grow', done => {
     {'x': 11, 'y': 10},
     {'x': 11, 'y': 10}
   ]);
-	requestBodyBuilder.printBoard(requestBody);
+  requestBodyBuilder.printBoard(requestBody);
 
 	const responseHandler = (err, res) => {
 		testHelper.checkForGoodResponse(err, res);
@@ -958,7 +958,7 @@ it('should cut off a snake when it can easily kill the enemy', done => {
 	testHelper.sendMoveRequest(url, requestBody, responseHandler);
 });
 
-it.only('should not kill itself assuming that the enemy will kill it', done => {
+it('should not kill itself assuming that the enemy will kill it', done => {
   const requestBody = requestBodyBuilder.getEmptyRequestBody(5, 5);
 
   requestBodyBuilder.addYou(requestBody, [

@@ -5,8 +5,8 @@ function getEmptyRequestBody(width = 20, height = 20, turn = 0) {
   body['you'] = {};
   body['game'] = {};
 
-	body.board.width = width;
-  body.board.height = height;
+	body.board.height = width;
+  body.board.width = height;
   body.board.food = [];
   body.board.snakes = [];
 	body['turn'] = turn;
@@ -85,10 +85,10 @@ function printBoard(body) {
 	// Create board
   let board = [];
 
-	for (let i = 0; i < body.board.height; i++) {
+	for (let i = 0; i < body.board.width; i++) {
     let row = [];
 
-		for (let j = 0; j < body.board.width; j++) {
+		for (let j = 0; j < body.board.height; j++) {
 			row.push('-');
     }
 
@@ -132,8 +132,8 @@ function printBoard(body) {
 	console.log('\n\nYou have ' + body.you.health + ' health!');
 
 	// Print board
-	for (let i = 0; i < body.board.width; i++) {
-		for (let j = 0; j < body.board.height; j++) {
+	for (let i = 0; i < body.board.height; i++) {
+		for (let j = 0; j < body.board.width; j++) {
 			process.stdout.write(board[j][i] + ' ');
 		}
 
